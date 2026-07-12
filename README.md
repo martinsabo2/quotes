@@ -15,3 +15,4 @@ The quote text is selectable and can be copied to the clipboard.
 The application runs in the system tray.
 
 The application shows a tray icon in the system tray, and when clicked, it will show the quote of the day in a window.
+

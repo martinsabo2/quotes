@@ -12,6 +12,10 @@ public class AppConfig
     public string QuotesFolder { get; set; } = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Quotes");
 
+    public string DefaultFontFamily { get; set; } = "Georgia";
+
+    public double DefaultFontSize { get; set; } = 24;
+
     public DateTime LastShownDate { get; set; } = DateTime.MinValue;
 
     public static AppConfig Load()

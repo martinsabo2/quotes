@@ -52,7 +52,7 @@ public partial class App : System.Windows.Application
     private void ShowQuoteWindow()
     {
         _config = AppConfig.Load();
-        var quote = QuoteService.GetRandomQuote(_config.QuotesFolder);
+        var quote = QuoteService.GetRandomQuote(_config.QuotesFolder, _config.DefaultFontFamily, _config.DefaultFontSize);
         if (quote == null)
         {
             OpenSettings();
@@ -65,7 +65,7 @@ public partial class App : System.Windows.Application
         var window = new MainWindow(quote, () =>
         {
             _config = AppConfig.Load();
-            return QuoteService.GetRandomQuote(_config.QuotesFolder);
+            return QuoteService.GetRandomQuote(_config.QuotesFolder, _config.DefaultFontFamily, _config.DefaultFontSize);
         });
         window.SettingsRequested += OpenSettings;
         window.Show();

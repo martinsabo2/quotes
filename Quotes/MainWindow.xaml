@@ -45,36 +45,15 @@
 
     <Grid Margin="28,24,28,20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <TextBlock Grid.Row="0"
-                   Text="✦  Quote of the Day"
-                   FontSize="13"
-                   FontWeight="SemiBold"
-                   Foreground="#888888"
-                   Margin="0,0,0,18"/>
-
-        <!-- Quote text – read-only but fully selectable -->
-        <TextBox Grid.Row="1"
-                 x:Name="QuoteTextBox"
-                 IsReadOnly="True"
-                 TextWrapping="Wrap"
-                 FontSize="19"
-                 FontStyle="Italic"
-                 FontFamily="Georgia"
-                 Foreground="#1A1A1A"
-                 Background="Transparent"
-                 BorderThickness="0"
-                 VerticalScrollBarVisibility="Auto"
-                 Padding="0,0,0,4"
-                 VerticalContentAlignment="Top"/>
+        <WebBrowser Grid.Row="0"
+                    x:Name="QuoteBrowser"/>
 
         <!-- Button row -->
-        <Grid Grid.Row="2" Margin="0,16,0,0">
+        <Grid Grid.Row="1" Margin="0,16,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
