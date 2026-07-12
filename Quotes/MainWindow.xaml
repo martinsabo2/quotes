@@ -1,0 +1,103 @@
+﻿<Window x:Class="Quotes.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Quotes"
+        mc:Ignorable="d"
+        Title="Quote of the Day"
+        Width="620" Height="360"
+        MinWidth="400" MinHeight="280"
+        WindowStartupLocation="CenterScreen"
+        Background="#FAFAFA">
+    <Window.Resources>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#E8E8E8"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#D8D8D8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#C8C8C8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="28,24,28,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                   Text="✦  Quote of the Day"
+                   FontSize="13"
+                   FontWeight="SemiBold"
+                   Foreground="#888888"
+                   Margin="0,0,0,18"/>
+
+        <!-- Quote text – read-only but fully selectable -->
+        <TextBox Grid.Row="1"
+                 x:Name="QuoteTextBox"
+                 IsReadOnly="True"
+                 TextWrapping="Wrap"
+                 FontSize="19"
+                 FontStyle="Italic"
+                 FontFamily="Georgia"
+                 Foreground="#1A1A1A"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 VerticalScrollBarVisibility="Auto"
+                 Padding="0,0,0,4"
+                 VerticalContentAlignment="Top"/>
+
+        <!-- Button row -->
+        <Grid Grid.Row="2" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Copied feedback label -->
+            <TextBlock x:Name="CopiedLabel"
+                       Grid.Column="0"
+                       Text="Copied to clipboard!"
+                       FontSize="12"
+                       Foreground="#4CAF50"
+                       VerticalAlignment="Center"
+                       Visibility="Collapsed"/>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Copy" Style="{StaticResource ActionButton}"
+                        Margin="0,0,8,0" Click="CopyButton_Click"/>
+                <Button Content="Settings" Style="{StaticResource ActionButton}"
+                        Margin="0,0,8,0" Click="SettingsButton_Click"/>
+                <Button Content="Close" Style="{StaticResource ActionButton}"
+                        Click="CloseButton_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
+
