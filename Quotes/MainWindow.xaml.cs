@@ -8,11 +8,13 @@ public partial class MainWindow : Window
     public event Action? SettingsRequested;
 
     private readonly DispatcherTimer _copiedTimer;
+    private readonly Func<string?> _nextQuoteProvider;
 
-    public MainWindow(string quote)
+    public MainWindow(string quote, Func<string?> nextQuoteProvider)
     {
         InitializeComponent();
         QuoteTextBox.Text = quote;
+        _nextQuoteProvider = nextQuoteProvider;
 
         _copiedTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
         _copiedTimer.Tick += (_, _) =>
@@ -20,6 +22,17 @@ public partial class MainWindow : Window
             CopiedLabel.Visibility = Visibility.Collapsed;
             _copiedTimer.Stop();
         };
+    }
+
+    private void NextButton_Click(object sender, RoutedEventArgs e)
+    {
+        var nextQuote = _nextQuoteProvider();
+        if (!string.IsNullOrWhiteSpace(nextQuote))
+        {
+            QuoteTextBox.Text = nextQuote;
+            CopiedLabel.Visibility = Visibility.Collapsed;
+            _copiedTimer.Stop();
+        }
     }
 
     private void CopyButton_Click(object sender, RoutedEventArgs e)

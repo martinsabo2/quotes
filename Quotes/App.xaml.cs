@@ -62,7 +62,11 @@ public partial class App : System.Windows.Application
         _config.LastShownDate = DateTime.Today;
         _config.Save();
 
-        var window = new MainWindow(quote);
+        var window = new MainWindow(quote, () =>
+        {
+            _config = AppConfig.Load();
+            return QuoteService.GetRandomQuote(_config.QuotesFolder);
+        });
         window.SettingsRequested += OpenSettings;
         window.Show();
         window.Activate();
