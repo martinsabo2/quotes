@@ -16,3 +16,8 @@ The application runs in the system tray.
 
 The application shows a tray icon in the system tray, and when clicked, it will show the quote of the day in a window.
 
+# Starting the app
+Compile a release version. Then, you can start it from a PowerShell command prompt:
+`Start-Process .\Quotes\bin\Release\net10.0-windows\Quotes.exe`
+or you can run a debug version:
+`Start-Process .\Quotes\bin\Debug\net10.0-windows\Quotes.exe`
