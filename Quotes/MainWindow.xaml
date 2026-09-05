@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Quotes"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         mc:Ignorable="d"
         Title="Quote of the Day"
         Width="620" Height="360"
@@ -49,8 +50,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <WebBrowser Grid.Row="0"
-                    x:Name="QuoteBrowser"/>
+        <wv2:WebView2 Grid.Row="0"
+                      x:Name="QuoteBrowser" />
 
         <!-- Button row -->
         <Grid Grid.Row="1" Margin="0,16,0,0">

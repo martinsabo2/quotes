@@ -10,8 +10,8 @@ public sealed record QuoteContent(string Html, string PlainText);
 
 public static partial class QuoteService
 {
-    //private static readonly string[] SupportedExtensions = [".txt", ".html", ".htm", ".md"];
-    private static readonly string[] SupportedExtensions = [".md"];
+    private static readonly string[] SupportedExtensions = [".txt", ".html", ".htm", ".md"];
+
     private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
         .UseAdvancedExtensions()
         .UseSoftlineBreakAsHardlineBreak() // <-- Enables automatic <br /> rendering
