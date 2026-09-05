@@ -18,6 +18,8 @@ public class AppConfig
 
     public DateTime LastShownDate { get; set; } = DateTime.MinValue;
 
+    public List<string> ShuffleQueue { get; set; } = [];
+
     public static AppConfig Load()
     {
         try

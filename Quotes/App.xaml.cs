@@ -43,7 +43,7 @@ public partial class App : System.Windows.Application
 
     private void TryShowDailyQuote()
     {
-        _config = AppConfig.Load();
+        //_config = AppConfig.Load();
         //if (_config.LastShownDate.Date == DateTime.Today)
         //    return;
 

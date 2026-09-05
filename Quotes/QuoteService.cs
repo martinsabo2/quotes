@@ -23,7 +23,19 @@ public static partial class QuoteService
         if (files.Length == 0)
             return null;
 
-        var file = files[Random.Shared.Next(files.Length)];
+        var config = AppConfig.Load();
+
+        // Remove queued entries that no longer exist on disk
+        config.ShuffleQueue.RemoveAll(p => !files.Contains(p, StringComparer.OrdinalIgnoreCase));
+
+        // Refill with a fresh shuffle when the queue is exhausted
+        if (config.ShuffleQueue.Count == 0)
+            config.ShuffleQueue.AddRange(files.OrderBy(_ => Random.Shared.Next()));
+
+        // Dequeue the next file
+        var file = config.ShuffleQueue[0];
+        config.ShuffleQueue.RemoveAt(0);
+        config.Save();
         var content = File.ReadAllText(file).Trim();
         var extension = Path.GetExtension(file);
 
