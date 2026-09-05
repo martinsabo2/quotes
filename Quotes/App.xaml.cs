@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -15,6 +15,7 @@ public partial class App : System.Windows.Application
     private NotifyIcon? _notifyIcon;
     private Icon? _trayAppIcon;
     private AppConfig _config = AppConfig.Load();
+    private MainWindow? _mainWindow;
 
     [DllImport("user32.dll", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
@@ -51,6 +52,13 @@ public partial class App : System.Windows.Application
 
     private void ShowQuoteWindow()
     {
+        // a guard to allow only one open window at a time
+        if (_mainWindow is { IsLoaded: true })
+        {
+            _mainWindow.Activate();
+            return;
+        }
+
         _config = AppConfig.Load();
         var quote = QuoteService.GetRandomQuote(_config.QuotesFolder, _config.DefaultFontFamily, _config.DefaultFontSize);
         if (quote == null)
@@ -62,14 +70,14 @@ public partial class App : System.Windows.Application
         _config.LastShownDate = DateTime.Today;
         _config.Save();
 
-        var window = new MainWindow(quote, () =>
+        _mainWindow = new MainWindow(quote, () =>
         {
             _config = AppConfig.Load();
             return QuoteService.GetRandomQuote(_config.QuotesFolder, _config.DefaultFontFamily, _config.DefaultFontSize);
         });
-        window.SettingsRequested += OpenSettings;
-        window.Show();
-        window.Activate();
+        _mainWindow.SettingsRequested += OpenSettings;
+        _mainWindow.Show();
+        _mainWindow.Activate();
     }
 
     private void OpenSettings()
