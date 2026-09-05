@@ -9,7 +9,7 @@ WPF C# .NET 10
 
 # Features
 Application displays a quote of the day once a day, the first time I start or awaken my computer.
-The quotes are stored as text files in a folder that can be configured.
+The quotes are stored as text files (.txt, .md, .html, .htm) in a folder that can be configured.
 The application will randomly select a quote from the folder and display it in a window.
 The quote text is selectable and can be copied to the clipboard.
 The application runs in the system tray.

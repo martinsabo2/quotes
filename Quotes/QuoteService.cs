@@ -2,6 +2,7 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using Markdig;
 
 namespace Quotes;
 
@@ -9,7 +10,11 @@ public sealed record QuoteContent(string Html, string PlainText);
 
 public static partial class QuoteService
 {
-    private static readonly string[] SupportedExtensions = [".txt", ".html", ".htm"];
+    private static readonly string[] SupportedExtensions = [".txt", ".html", ".htm", ".md"];
+    private static readonly MarkdownPipeline MarkdownPipeline = new MarkdownPipelineBuilder()
+        .UseAdvancedExtensions()
+        .UseSoftlineBreakAsHardlineBreak() // <-- Enables automatic <br /> rendering
+        .Build();
 
     public static QuoteContent? GetRandomQuote(string folder, string defaultFontFamily, double defaultFontSize)
     {
@@ -45,9 +50,35 @@ public static partial class QuoteService
             return new QuoteContent(content, plainText);
         }
 
-        var encodedText = WebUtility.HtmlEncode(content);
         var encodedFontFamily = WebUtility.HtmlEncode(defaultFontFamily);
         var fontSizeValue = defaultFontSize.ToString("0.##", CultureInfo.InvariantCulture);
+
+        if (extension.Equals(".md", StringComparison.OrdinalIgnoreCase))
+        {
+            var renderedHtml = Markdown.ToHtml(content, MarkdownPipeline);
+            var plainText = Markdown.ToPlainText(content, MarkdownPipeline).Trim();
+
+            var mdHtml = $$"""
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { margin: 0; color: #1A1A1A; background: transparent; font-family: '{{encodedFontFamily}}', serif; font-size: {{fontSizeValue}}px; line-height: 1.5; }
+p { margin: 0 0 0.5em 0; }
+p:last-child { margin-bottom: 0; }
+blockquote { margin: 0 0 0.5em 1em; padding-left: 0.5em; border-left: 3px solid #ccc; font-style: italic; }
+</style>
+</head>
+<body>
+{{renderedHtml}}
+</body>
+</html>
+""";
+            return new QuoteContent(mdHtml, plainText);
+        }
+
+        var encodedText = WebUtility.HtmlEncode(content);
 
         var html = $$"""
 <!DOCTYPE html>

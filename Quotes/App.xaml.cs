@@ -164,7 +164,7 @@ public partial class App : System.Windows.Application
     private void EnsureQuotesFolderHasSamples()
     {
         _config = AppConfig.Load();
-        if (Directory.Exists(_config.QuotesFolder) && Directory.GetFiles(_config.QuotesFolder, "*.txt").Length > 0)
+        if (Directory.Exists(_config.QuotesFolder) && Directory.EnumerateFiles(_config.QuotesFolder).Any())
             return;
 
         Directory.CreateDirectory(_config.QuotesFolder);
