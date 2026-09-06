@@ -121,7 +121,7 @@ p + ol, p + ul { margin-top: 0; }
 <meta charset="utf-8">
 <style>
 body { margin: 0; color: #1A1A1A; background: transparent; }
-pre { white-space: pre-wrap; margin: 0; {{fontStyle}} font-style: italic; line-height: 1.5; color: #1A1A1A; }
+pre { white-space: pre-wrap; margin: 0; {{fontStyle}} line-height: 1.5; color: #1A1A1A; }
 </style>
 </head>
 <body>
